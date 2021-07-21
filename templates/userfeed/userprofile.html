@@ -1,0 +1,109 @@
+{% extends 'base.html'%}
+{%block body%}
+<div class="container">
+<div class=" mt-5 d-flex justify-content-center">
+    <div class="card p-3 w-100">
+        <div class="d-flex align-items-center">
+            <div class="image"> <img src="{{dp.url}}" class="rounded" width="155"> </div>
+            <div class="mx-3 w-100">
+                <h4 class="mb-0 mt-0">{{user}}</h4> <span>{{bio}}</span>
+                <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+                    <div class="d-flex flex-column"> <span class="articles">Posts</span> <span class="number1">38</span> </div>
+                    <div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">{{followers}}</span> </div>
+                    <div class="d-flex flex-column"> <span class="rating">Following</span> <span class="number3">{{following}}</span> </div>
+                </div>
+                <div class="button mt-2 d-flex flex-row align-items-center "> <button class="btn btn-sm btn-outline-primary mx-2">Chat</button>  <button class="btn btn-sm btn-primary mx-2">Follow</button> 
+               {% if user == request.user %}
+                <a class="btn btn-sm btn-outline-primary mx-2" href="#"  role="button">Edit</a>
+                {% endif %}
+             </div>
+  
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+<div class="row ">
+ {% for i in p %}
+ <div class="col-sm my-3">
+ <div class="card hard" style="width:25vw">
+  <img class="card-img-top" src="{{i.photo.url}}" alt="Card image">
+
+  <div class="card-body">   
+    <p class="card-text">{{i.caption}}</p>
+   <p class="card-text">- A post by  <a class="link-secondary" href="{% url 'userprofile' i.user %}"> {{i.user}} </a> </p>
+
+    <div class="row">
+     <div class="col-sm">
+       <a type="button" class="btn-floating btn-sm "><i class="fa fa-heart fa-2x" style = "color:#FF4081;" ></i></a>
+       <a type="button" class="btn-floating btn-sm "><i class="fas fa-comment fa-2x"></i></a>
+       {% if request.user == i.user %}
+       <a type="button" href="{% url 'deletepost' i.id %}"class="btn-floating btn-sm "><i class="fas fa-trash fa-2x" style = "color:green;"></i></a>
+       {% endif %}
+     </div>
+    </div>
+
+    <div class="col-sm">
+      <p class="card-text">{{i.date}}</p>
+    </div>
+
+  </div>
+ </div>
+ </div>
+  {%endfor%}
+</div>
+
+
+{%endblock body%}
+{% block style%}
+best{
+    display:flex;
+}
+body {
+   background: linear-gradient(to right, #800000 0%, #006699 100%);
+    border-radius: 10px
+}
+.card-img-top{
+    height:30vw;
+    width:25vw;
+}
+.hard {
+    height: 43vw;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff
+}
+
+.stats {
+    background: #f2f5f8 !important;
+    color: #000 !important
+}
+
+.articles {
+    font-size: 10px;
+    color: #a1aab9
+}
+
+.number1 {
+    font-weight: 500
+}
+
+.followers {
+    font-size: 10px;
+    color: #a1aab9
+}
+
+.number2 {
+    font-weight: 500
+}
+
+.rating {
+    font-size: 10px;
+    color: #a1aab9
+}
+
+.number3 {
+    font-weight: 500
+}
+{%endblock style%}
